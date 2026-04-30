@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTC AI-Driven Email Attribution & LTV Optimization Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fafaf9; color: #1e293b; }
+
+        .chart-container {
+            position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto;
+            height: 320px; max-height: 400px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 380px; } }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .nav-btn { border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+        .nav-btn.active { border-bottom: 2px solid #0f766e; color: #0f766e; font-weight: 600; }
+
+        .hover-card { transition: all 0.2s ease; cursor: pointer; }
+        .hover-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #0f766e; }
+
+        .arch-block { transition: all 0.2s ease; cursor: pointer; border: 2px solid #e7e5e4; }
+        .arch-block:hover { border-color: #0f766e; background-color: #f0fdfa; transform: scale(1.02); }
+        .arch-block.active { border-color: #0f766e; background-color: #ccfbf1; box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.2); }
+
+        .timeline-dot { position: absolute; left: -6px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background-color: #0f766e; border: 3px solid #fff; box-shadow: 0 0 0 1px #0f766e; }
+
+        .gap-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-out; }
+        .gap-details.expanded { max-height: 600px; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+        .risk-card .mitigation { opacity: 0; height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .risk-card:hover .mitigation { opacity: 1; height: auto; margin-top: 1rem; }
+
+        .kpi-insight-card { transition: all 0.25s ease; cursor: default; }
+        .kpi-insight-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.12); border-color: #0f766e; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center py-4">
+            <div class="flex items-center mb-4 md:mb-0">
+                <div class="w-10 h-10 rounded bg-teal-800 text-white font-bold flex items-center justify-center text-2xl mr-3 shadow-inner">D</div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-800 leading-tight">DTC Intelligence</h1>
+                    <div class="text-xs font-medium text-slate-500 tracking-wide uppercase">AI Email LTV Optimization</div>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-6">
+                <button onclick="switchTab('tab-summary')" id="btn-tab-summary" class="nav-btn active px-1 py-2 text-sm font-medium text-slate-600 hover:text-teal-700">Executive Briefing</button>
+                <button onclick="switchTab('tab-challenges')" id="btn-tab-challenges" class="nav-btn px-1 py-2 text-sm font-medium text-slate-600 hover:text-teal-700">Strategic Challenges</button>
+                <button onclick="switchTab('tab-architecture')" id="btn-tab-architecture" class="nav-btn px-1 py-2 text-sm font-medium text-slate-600 hover:text-teal-700">Pipeline & Flow</button>
+                <button onclick="switchTab('tab-roadmap')" id="btn-tab-roadmap" class="nav-btn px-1 py-2 text-sm font-medium text-slate-600 hover:text-teal-700">Roadmap & Risks</button>
+                <button onclick="switchTab('tab-kpi')" id="btn-tab-kpi" class="nav-btn px-1 py-2 text-sm font-medium text-slate-600 hover:text-teal-700">KPIs & Resources</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <!-- Executive Briefing -->
+    <section id="tab-summary" class="tab-content active">
+        <div class="bg-white rounded-xl shadow-sm p-8 md:p-12 mb-8 border border-stone-200">
+            <div class="max-w-4xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-6">Turning Every Email Into a Relationship‑Building Asset</h2>
+                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                    Direct‑to‑Consumer brands live and die by customer relationships. Yet email—our highest‑ROI channel—is treated as a blunt instrument. We send millions of identical “We miss you” messages that ignore individual journeys, while the emails that <strong>truly built loyalty</strong> remain buried, their lessons lost.
+                </p>
+                <p class="text-lg text-slate-600 leading-relaxed mb-8">
+                    This proposal delivers a <strong>self‑learning email ecosystem</strong> powered by LLMs and Retrieval‑Augmented Generation. It attributes lifetime value back to exact messages, builds a dynamic knowledge base of our best work, and autonomously drafts hyper‑personalized, on‑brand emails that improve with every send.
+                </p>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-4 border-b border-stone-100 pb-2">Projected Transformational Outcomes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 hover-card">
+                    <div class="text-teal-700 text-4xl font-black mb-2">+25%</div>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">LTV Uplift</h4>
+                    <p class="text-sm text-slate-600">Attributed 90‑day LTV rises as AI‑personalized seed emails drive repeat purchases.</p>
+                </div>
+                <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 hover-card">
+                    <div class="text-teal-700 text-4xl font-black mb-2">‑90%</div>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">Copy Drafting Time</h4>
+                    <p class="text-sm text-slate-600">Marketing team reallocates 25+ hours/week from manual copywriting to creative strategy.</p>
+                </div>
+                <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 hover-card">
+                    <div class="text-teal-700 text-4xl font-black mb-2">+20%</div>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">Revenue per Email</h4>
+                    <p class="text-sm text-slate-600">Total attributed revenue per send grows as messages become more contextually relevant.</p>
+                </div>
+                <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 hover-card">
+                    <div class="text-teal-700 text-4xl font-black mb-2">>60%</div>
+                    <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2">AI‑Generated Winners</h4>
+                    <p class="text-sm text-slate-600">The system’s own creations replace human‑written Gold Standard emails in the knowledge base.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-teal-50 p-6 rounded-xl border border-teal-200">
+                    <h4 class="font-bold text-teal-800 text-lg mb-2">The Learning Loop</h4>
+                    <p class="text-sm text-teal-700 leading-relaxed">Every email sent is tagged with a Vector ID. When a customer’s LTV is later computed, the system traces back to the initiating message. Winning patterns are automatically promoted into the retrieval database—no manual campaign analysis required.</p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl border border-stone-200">
+                    <h4 class="font-bold text-slate-800 text-lg mb-2">Brand‑Safe, Fact‑Checked</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">A hallucination gate cross‑checks every generated email against the live Shopify product catalog. Brand voice cards and human‑in‑the‑loop curation ensure the tone remains unmistakably ours.</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-slate-800 rounded-xl shadow-lg p-8 text-center border-t-4 border-teal-600">
+            <div class="max-w-3xl mx-auto">
+                <h3 class="text-2xl font-bold text-white mb-3">From Cost Center to Proprietary LTV Engine</h3>
+                <p class="text-slate-300 text-lg leading-relaxed">This is not a one‑time AI experiment. It is a permanent self‑improving capability—one that turns every dollar of email revenue into a data point, making our entire marketing operation smarter, more efficient, and increasingly defensible.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Challenges -->
+    <section id="tab-challenges" class="tab-content">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">The Three Strategic Gaps</h2>
+            <p class="text-lg text-slate-600 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                DTC brands collect terabytes of behavioral data, yet email remains a pre‑scheduled, impersonal channel. <strong>Click each gap</strong> to see how it manifests in real operations—through the lens of well‑known brands—and the quantifiable business impact.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                <div class="bg-slate-50 p-6 border-b border-stone-200">
+                    <div class="text-teal-700 font-bold text-xl mb-1">Gap 01</div>
+                    <h3 class="font-bold text-slate-800 text-xl">True LTV Attribution</h3>
+                    <p class="text-sm text-slate-500 mt-1">We mistake quick conversions for relationship builders.</p>
+                </div>
+                <div class="p-2">
+                    <div class="p-4 cursor-pointer hover:bg-stone-50 border-b border-stone-100" onclick="toggleGap('gap1-1')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>Allbirds: “You left something behind”</span><span class="text-teal-600 text-lg" id="sign-gap1-1">+</span></div>
+                        <div id="gap1-1" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> A VIP who bought four pairs of Wool Runners receives the same cart‑abandonment email as a first‑time visitor. No mention of past purchases, sizing preference, or the sustainability story that originally brought her in. <strong>Impact:</strong> We misallocate budget; storytelling emails that drive 40% more repeat buyers are deprioritized because they didn’t maximize immediate clicks.</div>
+                    </div>
+                    <div class="p-4 cursor-pointer hover:bg-stone-50" onclick="toggleGap('gap1-2')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>Glossier: The invisible winning structure</span><span class="text-teal-600 text-lg" id="sign-gap1-2">+</span></div>
+                        <div id="gap1-2" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> A Boy Brow email accidentally becomes the highest repeat‑purchase driver of the quarter, yet its subject line, UGC photo placement, and tone are never tagged or reused. <strong>Impact:</strong> Institutional amnesia costs 10–15% in missed incremental email revenue over 18 months as the same A/B tests are repeated blindly.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                <div class="bg-slate-50 p-6 border-b border-stone-200">
+                    <div class="text-teal-700 font-bold text-xl mb-1">Gap 02</div>
+                    <h3 class="font-bold text-slate-800 text-xl">Institutional Amnesia</h3>
+                    <p class="text-sm text-slate-500 mt-1">Winning patterns are never codified or reused.</p>
+                </div>
+                <div class="p-2">
+                    <div class="p-4 cursor-pointer hover:bg-stone-50 border-b border-stone-100" onclick="toggleGap('gap2-1')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>Casper: Rigid trial‑ending flow</span><span class="text-teal-600 text-lg" id="sign-gap2-1">+</span></div>
+                        <div id="gap2-1" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> The “trial ending soon” sequence ignores whether the customer already bought pillows, engaged with sleep‑tip content, or responded better to social proof than discount urgency. <strong>Impact:</strong> The emails that actually moved trialists to full purchase plus accessory sales are buried in a log, invisible to the campaign team.</div>
+                    </div>
+                    <div class="p-4 cursor-pointer hover:bg-stone-50" onclick="toggleGap('gap2-2')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>The “coffee” subject line lost</span><span class="text-teal-600 text-lg" id="sign-gap2-2">+</span></div>
+                        <div id="gap2-2" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> A skincare brand’s empathetic subject line dramatically lifts engagement among new moms, but no system captures that “moment‑aware copy” outperforms product specs for this segment. <strong>Impact:</strong> The organization pays for creativity twice; it never builds a proprietary playbook.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                <div class="bg-slate-50 p-6 border-b border-stone-200">
+                    <div class="text-teal-700 font-bold text-xl mb-1">Gap 03</div>
+                    <h3 class="font-bold text-slate-800 text-xl">Scale vs. Personalization</h3>
+                    <p class="text-sm text-slate-500 mt-1">Batch segments fail 1:1 relevance.</p>
+                </div>
+                <div class="p-2">
+                    <div class="p-4 cursor-pointer hover:bg-stone-50 border-b border-stone-100" onclick="toggleGap('gap3-1')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>Furniture DTC: $3,000 vs. $299 table</span><span class="text-teal-600 text-lg" id="sign-gap3-1">+</span></div>
+                        <div id="gap3-1" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> A shopper eyeing a solid walnut table gets the same “dining table browsers” email as someone looking at an MDF option. <strong>Impact:</strong> Irrelevant messaging drives list fatigue and unsubscribes; 71% of consumers expect personalization, and 76% are frustrated when they don’t get it.</div>
+                    </div>
+                    <div class="p-4 cursor-pointer hover:bg-stone-50" onclick="toggleGap('gap3-2')">
+                        <div class="flex justify-between items-center font-semibold text-slate-700 text-sm"><span>The data exists, unused</span><span class="text-teal-600 text-lg" id="sign-gap3-2">+</span></div>
+                        <div id="gap3-2" class="gap-details mt-2 text-sm text-slate-600"><strong>Daily reality:</strong> With 500 SKUs and 2M subscribers, we have the behavioral data to personalize down to room style and budget. But our ESP only supports top‑level segments. <strong>Impact:</strong> LTV per acquired subscriber stalls, while acquisition costs rise.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline & Flow (Architecture) -->
+    <section id="tab-architecture" class="tab-content">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">Attribution‑to‑Generation Pipeline</h2>
+            <p class="text-lg text-slate-600 bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8">
+                A closed‑loop system that turns every email send into a future learning signal. <strong>Click each stage</strong> to reveal the technology, real‑world example, and business rationale.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 bg-white p-8 rounded-xl shadow-sm border border-stone-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-8 text-center border-b border-stone-100 pb-4">The Learning Flywheel</h3>
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="arch-block w-full max-w-sm rounded-lg p-4 text-center bg-stone-50" onclick="showArchDetails('attribution', this)">
+                        <div class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Step A</div>
+                        <div class="font-bold text-slate-800 text-lg">Granular Attribution & LTV Tracking</div>
+                        <div class="text-sm text-slate-500">Multi‑touch Vector ID chain, Gold Standard Win Log</div>
+                    </div>
+                    <div class="text-stone-300 font-bold text-2xl">&#8595;</div>
+                    <div class="arch-block w-full max-w-sm rounded-lg p-4 text-center bg-stone-50" onclick="showArchDetails('rag', this)">
+                        <div class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Step B</div>
+                        <div class="font-bold text-slate-800 text-lg">RAG Knowledge Base</div>
+                        <div class="text-sm text-slate-500">Vector embeddings of Gold Standard emails + brand voice cards</div>
+                    </div>
+                    <div class="text-stone-300 font-bold text-2xl">&#8595;</div>
+                    <div class="arch-block w-full max-w-sm rounded-lg p-4 text-center bg-stone-50" onclick="showArchDetails('llm', this)">
+                        <div class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Step C</div>
+                        <div class="font-bold text-slate-800 text-lg">LLM Drafting & Optimization</div>
+                        <div class="text-sm text-slate-500">Context‑aware prompt + hallucination gate + brand filter</div>
+                    </div>
+                    <div class="text-stone-300 font-bold text-2xl">&#8595;</div>
+                    <div class="arch-block w-full max-w-sm rounded-lg p-4 text-center bg-stone-50" onclick="showArchDetails('loop', this)">
+                        <div class="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">Step D</div>
+                        <div class="font-bold text-slate-800 text-lg">Autonomous Feedback Loop</div>
+                        <div class="text-sm text-slate-500">Performance‑based auto‑promotion, drift detection</div>
+                    </div>
+                    <div class="w-full max-w-md mt-6 pt-4 border-t-2 border-dashed border-stone-200">
+                        <div class="arch-block w-full rounded-lg p-4 text-center bg-slate-800 text-white" onclick="showArchDetails('governance', this)">
+                            <div class="font-bold text-lg mb-1">Governance & Brand Safety</div>
+                            <div class="text-xs text-slate-300">Factual validation, brand voice cards, human‑in‑the‑loop curation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-5">
+                <div id="arch-details-panel" class="bg-teal-800 text-white rounded-xl shadow-lg p-8 sticky top-24 h-auto min-h-[400px] flex flex-col justify-center">
+                    <div class="text-center opacity-70" id="arch-placeholder">
+                        <div class="text-4xl mb-4">&#8592;</div>
+                        <p class="text-lg">Click any pipeline stage to explore the technology and how it works with a real DTC example.</p>
+                    </div>
+                    <div id="arch-content" class="hidden">
+                        <div class="text-teal-300 text-sm font-bold uppercase tracking-wider mb-2" id="ad-stage"></div>
+                        <h3 class="text-2xl font-bold mb-4 text-white" id="ad-title"></h3>
+                        <div class="mb-6 bg-teal-900/50 p-4 rounded-lg border border-teal-700">
+                            <h4 class="text-xs text-teal-400 uppercase font-bold mb-1">Core Technology</h4>
+                            <p class="font-semibold text-lg" id="ad-tech"></p>
+                        </div>
+                        <h4 class="text-sm text-teal-400 uppercase font-bold mb-2">How It Works – Thread & Field Example</h4>
+                        <p class="text-teal-50 mb-4 leading-relaxed text-sm" id="ad-desc"></p>
+                        <h4 class="text-sm text-teal-400 uppercase font-bold mb-2">Business Rationale</h4>
+                        <p class="text-teal-50 leading-relaxed text-sm italic border-l-2 border-teal-500 pl-3" id="ad-rationale"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap & Risks -->
+    <section id="tab-roadmap" class="tab-content">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">24‑Month Phased Rollout & Risk Management</h2>
+            <p class="text-lg text-slate-600 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                Starting with a single product category pilot, the platform scales across the entire brand in five measured phases. Each phase has a go/no‑go gate, and proactive risk mitigation is built into the architecture from day one.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-stone-200">
+                <h3 class="text-2xl font-bold text-slate-800 mb-8 border-b border-stone-100 pb-4">Implementation Timeline</h3>
+                <div class="relative pl-6 border-l-2 border-stone-200 space-y-8">
+                    <div class="relative"><div class="timeline-dot"></div><div class="text-sm font-bold text-teal-700 mb-1">Months 1–3</div><h4 class="font-bold text-slate-800 text-lg">Phase 1: Foundation</h4><p class="text-sm text-slate-600 mt-1">Stakeholder alignment, data audit, pilot category selected (e.g., women’s running footwear). Privacy and consent frameworks established.</p></div>
+                    <div class="relative"><div class="timeline-dot"></div><div class="text-sm font-bold text-teal-700 mb-1">Months 4–8</div><h4 class="font-bold text-slate-800 text-lg">Phase 2: Attribution Engine</h4><p class="text-sm text-slate-600 mt-1">Multi‑touch LTV attribution built, 18‑month email backfill with Vector IDs, Gold Standard logging validated against 100 customer journeys.</p></div>
+                    <div class="relative"><div class="timeline-dot"></div><div class="text-sm font-bold text-teal-700 mb-1">Months 9–14</div><h4 class="font-bold text-slate-800 text-lg">Phase 3: RAG + LLM Drafting</h4><p class="text-sm text-slate-600 mt-1">Vector DB loaded with 200 Gold Standard emails, LLM integration with human review UI. A/B tests begin against manual templates.</p></div>
+                    <div class="relative"><div class="timeline-dot"></div><div class="text-sm font-bold text-teal-700 mb-1">Months 15–20</div><h4 class="font-bold text-slate-800 text-lg">Phase 4: Autonomous Loop & Pilot Optimization</h4><p class="text-sm text-slate-600 mt-1">Feedback loop closed; AI‑generated winners auto‑promoted. Multi‑armed bandit shifts 80% of traffic to AI variants. Pilot LTV report published.</p></div>
+                    <div class="relative"><div class="timeline-dot bg-slate-800 border-slate-800"></div><div class="text-sm font-bold text-teal-700 mb-1">Months 21–24</div><h4 class="font-bold text-slate-800 text-lg">Phase 5: Brand‑Wide Scale</h4><p class="text-sm text-slate-600 mt-1">All product categories onboarded. Self‑serve campaign studio launched. Brand‑specific LLM fine‑tuned. Channel expansion prep.</p></div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-stone-200">
+                <h3 class="text-2xl font-bold text-slate-800 mb-8 border-b border-stone-100 pb-4">Risk Matrix</h3>
+                <div class="space-y-4">
+                    <div class="risk-card bg-stone-50 border border-stone-200 p-4 rounded-lg cursor-pointer">
+                        <div class="flex justify-between items-start"><div><h4 class="font-bold text-slate-800">LLM Hallucinations</h4><p class="text-xs text-slate-500">Wrong prices, colors, or unauthorized discounts.</p></div><div class="text-right"><span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold">Prob: Med</span><span class="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded font-bold mt-1">Impact: Critical</span></div></div>
+                        <div class="mitigation text-sm text-slate-700 border-t border-stone-200 pt-3"><strong>Mitigation:</strong> Pre‑send validation against live Shopify product API. Automatic rejection if confidence <99%. Human‑in‑the‑loop for new categories.</div>
+                    </div>
+                    <div class="risk-card bg-stone-50 border border-stone-200 p-4 rounded-lg cursor-pointer">
+                        <div class="flex justify-between items-start"><div><h4 class="font-bold text-slate-800">Brand Voice Dilution</h4><p class="text-xs text-slate-500">AI copy sounds generic or off‑tone.</p></div><div class="text-right"><span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold">Prob: Med</span><span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold mt-1">Impact: High</span></div></div>
+                        <div class="mitigation text-sm text-slate-700 border-t border-stone-200 pt-3"><strong>Mitigation:</strong> Brand voice card retrieved with every query. LLM fine‑tuned on 500 approved emails. Quarterly blind creative assessments.</div>
+                    </div>
+                    <div class="risk-card bg-stone-50 border border-stone-200 p-4 rounded-lg cursor-pointer">
+                        <div class="flex justify-between items-start"><div><h4 class="font-bold text-slate-800">Model / Knowledge Drift</h4><p class="text-xs text-slate-500">Winning patterns become stale.</p></div><div class="text-right"><span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold">Prob: Low</span><span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded font-bold mt-1">Impact: Med</span></div></div>
+                        <div class="mitigation text-sm text-slate-700 border-t border-stone-200 pt-3"><strong>Mitigation:</strong> Automated weekly retrieval relevance checks; AI variants auto‑paused after 2 underperforming weeks. Quarterly full re‑embedding.</div>
+                    </div>
+                    <div class="risk-card bg-stone-50 border border-stone-200 p-4 rounded-lg cursor-pointer">
+                        <div class="flex justify-between items-start"><div><h4 class="font-bold text-slate-800">Internal Resistance</h4><p class="text-xs text-slate-500">Creative/marketing teams skeptical of AI.</p></div><div class="text-right"><span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold">Prob: Med</span><span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold mt-1">Impact: High</span></div></div>
+                        <div class="mitigation text-sm text-slate-700 border-t border-stone-200 pt-3"><strong>Mitigation:</strong> Voluntary pilot team; Phase‑1 attribution dashboards demonstrate value first. Positioned as creative assistant, not replacement.</div>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-slate-400 text-center italic">Hover over any risk card to reveal the detailed mitigation strategy.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPIs & Resources -->
+    <section id="tab-kpi" class="tab-content">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">Strategic KPIs & Team Structure</h2>
+            <p class="text-lg text-slate-600 bg-white p-6 rounded-xl shadow-sm border border-stone-200 mb-8">
+                Six headline metrics provide an at‑a‑glance view of the pipeline’s financial, operational, and quality impact. All baselines are captured in Phase 1 and reported quarterly.
+            </p>
+        </div>
+
+        <!-- Quick Insight Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">01</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Revenue</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-2">Conversion Lift (First Purchase)</h4>
+                <div class="flex items-baseline gap-2 mb-2"><span class="text-3xl font-black text-slate-400">3.2%</span><span class="text-slate-400 text-sm">→</span><span class="text-3xl font-black text-teal-700">4.0–4.2%</span><span class="text-sm font-bold text-teal-600">+25%</span></div>
+                <p class="text-sm text-slate-600">Email conversion rate from AI‑optimized sends, measured against matched control groups.</p>
+            </div>
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">02</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Loyalty</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-2">Repeat Purchase Rate (90‑day)</h4>
+                <div class="flex items-baseline gap-2 mb-2"><span class="text-3xl font-black text-slate-400">22%</span><span class="text-slate-400 text-sm">→</span><span class="text-3xl font-black text-teal-700">32%</span><span class="text-sm font-bold text-teal-600">+10pp</span></div>
+                <p class="text-sm text-slate-600">Buyers who purchase again within 90 days after receiving an AI‑personalized seed email.</p>
+            </div>
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">03</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Efficiency</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-2">Revenue per Email (RPE)</h4>
+                <div class="flex items-baseline gap-2 mb-2"><span class="text-3xl font-black text-slate-400">$0.08</span><span class="text-slate-400 text-sm">→</span><span class="text-3xl font-black text-teal-700">$0.10</span><span class="text-sm font-bold text-teal-600">+25%</span></div>
+                <p class="text-sm text-slate-600">Total attributed revenue (first + repeat) divided by sends, proving each message works harder.</p>
+            </div>
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">04</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Customer Value</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-4">90‑Day LTV per Attributed Customer</h4>
+                <div class="space-y-3 mb-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-slate-500 font-medium">Baseline ($85)</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-slate-300 h-2.5 rounded-full" style="width: 77%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-teal-700 font-bold">Target ($110)</span><span class="text-teal-600 font-bold">+29%</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-teal-500 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600">Average downstream value of customers whose journey started with an AI‑optimized email.</p>
+            </div>
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">05</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Productivity</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-4">Marketing Time Saved (Copy Drafting)</h4>
+                <div class="space-y-3 mb-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-slate-500 font-medium">Baseline (25 hrs/wk)</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-slate-300 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-teal-700 font-bold">Target (&lt;2.5 hrs/wk)</span><span class="text-teal-600 font-bold">‑90%</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-teal-500 h-2.5 rounded-full" style="width: 10%"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600">Hours freed from manual email drafting; team re‑focused on creative strategy and experimentation.</p>
+            </div>
+            <div class="kpi-insight-card bg-white rounded-xl shadow-sm border border-stone-200 p-6">
+                <div class="flex items-start justify-between mb-3"><div class="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg">06</div><span class="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-1 rounded">Engagement</span></div>
+                <h4 class="font-bold text-slate-800 text-lg mb-4">Site Engagement from Email Traffic</h4>
+                <div class="space-y-3 mb-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-slate-500 font-medium">Baseline (2:30 min)</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-slate-300 h-2.5 rounded-full" style="width: 83%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-teal-700 font-bold">Target (3:00 min)</span><span class="text-teal-600 font-bold">+20%</span></div>
+                        <div class="w-full bg-stone-100 rounded-full h-2.5">
+                            <div class="bg-teal-500 h-2.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600">Average session duration from email users; higher relevance drives deeper on‑site exploration.</p>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">Revenue & Loyalty KPI Projections</h3>
+                <div class="chart-container"><canvas id="kpiRevChart"></canvas></div>
+                <div class="mt-4 grid grid-cols-2 gap-4 text-xs">
+                    <div class="bg-stone-50 p-3 rounded"><strong>Conversion:</strong> Baseline 3.2% → Target 4.0%+</div>
+                    <div class="bg-stone-50 p-3 rounded"><strong>90‑day LTV:</strong> From $85 to $110 per attributed customer.</div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">Operational Efficiency Gains</h3>
+                <div class="chart-container"><canvas id="kpiOpsChart"></canvas></div>
+                <div class="mt-4 grid grid-cols-2 gap-4 text-xs">
+                    <div class="bg-stone-50 p-3 rounded"><strong>Drafting Time:</strong> 25 hours/week reduced to under 2.5 hours.</div>
+                    <div class="bg-stone-50 p-3 rounded"><strong>RPE:</strong> +25% increase in revenue generated per email send.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remaining KPIs Table -->
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-stone-200 mb-8">
+            <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-4">Additional Performance Indicators</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead><tr class="bg-stone-100 text-xs font-bold uppercase text-slate-600 border-b"><th class="p-3">Metric</th><th class="p-3">Baseline</th><th class="p-3">24‑Month Target</th><th class="p-3">Strategic Significance</th></tr></thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Gold Standard Evolution Rate</td><td class="p-3">0% AI</td><td class="p-3 text-teal-700 font-bold">&gt;60% AI‑generated</td><td class="p-3 text-slate-600">Proves the system creates new winning content that outperforms historical human bests.</td></tr>
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Hallucination / Factual Error Rate</td><td class="p-3">N/A</td><td class="p-3 text-teal-700 font-bold">&lt;1.5%</td><td class="p-3 text-slate-600">Percentage of emails flagged for incorrect product details; gate ensures brand integrity.</td></tr>
+                        <tr><td class="p-3 font-semibold text-slate-800">Brand Voice Consistency Score</td><td class="p-3">85% blind approval</td><td class="p-3 text-teal-700 font-bold">&gt;80% AI rated good+</td><td class="p-3 text-slate-600">Quarterly blind test by creative team to confirm tone remains authentic and on‑brand.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Team Resources Table -->
+        <div class="bg-white p-8 rounded-xl shadow-sm border border-stone-200">
+            <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-4">Core Implementation Team</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead><tr class="bg-stone-100 text-xs font-bold uppercase text-slate-600 border-b"><th class="p-3">Role</th><th class="p-3">Allocation</th><th class="p-3">Key Responsibilities</th></tr></thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Business Development / Internal Lead</td><td class="p-3"><span class="bg-teal-100 text-teal-800 px-2 py-1 rounded text-xs font-bold">100%</span></td><td class="p-3 text-slate-600">Stakeholder alignment, pilot coordination, legal procurement, internal communication.</td></tr>
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Data Engineer</td><td class="p-3"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">100%</span></td><td class="p-3 text-slate-600">ETL pipelines, vector DB management, Vector ID tagging, data quality monitors.</td></tr>
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">ML / Data Scientist</td><td class="p-3"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">100%</span></td><td class="p-3 text-slate-600">Attribution model, embeddings, RAG logic, prompt engineering, drift detection.</td></tr>
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Backend Engineer</td><td class="p-3"><span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-bold">75%</span></td><td class="p-3 text-slate-600">Content generation API, review UI, Klaviyo adapters, automated validation services.</td></tr>
+                        <tr class="border-b"><td class="p-3 font-semibold text-slate-800">Product Manager</td><td class="p-3"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">50%</span></td><td class="p-3 text-slate-600">Roadmap, marketing requirements, pilot feedback, Go/No‑Go gate coordination.</td></tr>
+                        <tr><td class="p-3 font-semibold text-slate-800">Brand / Creative Lead</td><td class="p-3"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-bold">25%</span></td><td class="p-3 text-slate-600">Guardian of brand voice, curates Gold Standard exemplars, participates in blind evaluations.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-6 bg-teal-50 p-4 rounded-lg border border-teal-200 text-sm text-teal-800">
+                <strong>Technology Stack:</strong> Shopify Plus, Klaviyo, Snowflake, dbt/Fivetran/Airflow, Pinecone, OpenAI embeddings, GPT‑4o (or fine‑tuned Llama 3), LangChain, Looker + Streamlit.
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    let charts = {};
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(el => { el.classList.remove('active'); el.classList.add('text-slate-600'); });
+        const target = document.getElementById(tabId);
+        if(target) target.classList.add('active');
+        const btn = document.getElementById('btn-' + tabId);
+        if(btn) { btn.classList.add('active'); btn.classList.remove('text-slate-600'); }
+        if(tabId === 'tab-kpi') setTimeout(initKpiCharts, 80);
+    }
+
+    function toggleGap(id) {
+        const el = document.getElementById(id);
+        const sign = document.getElementById('sign-' + id);
+        if(el) {
+            if(el.classList.contains('expanded')) { el.classList.remove('expanded'); if(sign) sign.textContent = '+'; }
+            else { el.classList.add('expanded'); if(sign) sign.textContent = '−'; }
+        }
+    }
+
+    const archData = {
+        attribution: {
+            stage:"Step A", title:"Granular Attribution & LTV Tracking",
+            tech:"Multi‑touch model (dbt), Vector ID injection, Gold Standard Win Log",
+            desc:"Every email sent via Klaviyo gets a unique Vector ID linking creative, product, and segment. When Maya purchases the Summit Boot after receiving two emails, the engine attributes the sale across a configurable window and tracks her subsequent $940 in sock/fleece/tent purchases back to the original seed email.",
+            rationale:"Replaces last‑click with true LTV visibility. Gold Standard emails (top 10% by 90‑day revenue) become the raw material for all future content generation."
+        },
+        rag: {
+            stage:"Step B", title:"RAG Knowledge Base",
+            tech:"Pinecone vector DB, OpenAI text‑embedding‑3‑small, brand voice card embeddings",
+            desc:"All Gold Standard emails are embedded with metadata (tone, category, segment, offer type). When Alex browses the Alpine Pro Jacket, the system retrieves the top 3 winning emails for high‑intent outdoor apparel buyers—including a rain jacket email with a customer video review and a fleece email focused on sustainability.",
+            rationale:"Grounds generation in our own proven successes, not generic templates. Retrieval latency is sub‑50ms, suitable for real‑time triggers."
+        },
+        llm: {
+            stage:"Step C", title:"LLM Drafting & Optimization",
+            tech:"GPT‑4o (or fine‑tuned Llama 3), LangChain prompt templates, Shopify product API validation",
+            desc:"The LLM analyzes why the three retrieved emails worked, then drafts a new message for Alex that mirrors those patterns while incorporating his past Summit Boot purchase, the current Alpine Pro attributes, and inferred regional weather. A hallucination gate rejects any email with incorrect prices or features.",
+            rationale:"Generates 100% original, fact‑checked copy that inherits the DNA of our best performers. Brand voice card ensures tone consistency."
+        },
+        loop: {
+            stage:"Step D", title:"Autonomous Feedback Loop",
+            tech:"Automated 90‑day LTV calculation, vector store auto‑promotion, drift detection",
+            desc:"If the email sent to Alex drives $375+ in downstream LTV, it is automatically embedded and added to the vector DB, displacing the lowest‑performing Gold Standard in that niche. Weekly checks monitor retrieval relevance; underperforming AI variants are paused after two consecutive weeks below control.",
+            rationale:"The system never stagnates. It learns from every dollar, autonomously keeping the knowledge base fresh and aligned with evolving customer behavior."
+        },
+        governance: {
+            stage:"Foundation", title:"Governance & Brand Safety",
+            tech:"Human‑in‑the‑loop UI (Streamlit), consent management, RBAC, audit logging",
+            desc:"All AI drafts are routed through a lightweight approval interface where marketing can review, edit, or reject. Customer identifiers are hashed in the vector DB; explicit opt‑in is collected for AI‑personalized content. Full audit trails satisfy privacy regulations.",
+            rationale:"Balances automation with brand control. The creative team remains the final authority while benefiting from 90% time savings."
+        }
+    };
+
+    function showArchDetails(key, element) {
+        document.querySelectorAll('.arch-block').forEach(el => el.classList.remove('active'));
+        if(element) element.classList.add('active');
+        document.getElementById('arch-placeholder').classList.add('hidden');
+        document.getElementById('arch-content').classList.remove('hidden');
+        const d = archData[key];
+        if(d) {
+            document.getElementById('ad-stage').textContent = d.stage;
+            document.getElementById('ad-title').textContent = d.title;
+            document.getElementById('ad-tech').textContent = d.tech;
+            document.getElementById('ad-desc').textContent = d.desc;
+            document.getElementById('ad-rationale').textContent = d.rationale;
+        }
+    }
+
+    function initKpiCharts() {
+        if(charts.rev && charts.ops) return;
+
+        const revCanvas = document.getElementById('kpiRevChart');
+        if(revCanvas) {
+            if(charts.rev) charts.rev.destroy();
+            charts.rev = new Chart(revCanvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Conversion Rate (%)', 'Repeat Purchase Rate (%)', '90‑day LTV ($)'],
+                    datasets: [
+                        { label: 'Current Baseline', data: [3.2, 22, 85], backgroundColor: '#d6d3d1', borderRadius: 6 },
+                        { label: '24‑Month Target', data: [4.1, 32, 110], backgroundColor: '#0f766e', borderRadius: 6 }
+                    ]
+                },
+                options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{usePointStyle:true, padding:20}} }, scales:{ y:{ beginAtZero:true } } }
+            });
+        }
+
+        const opsCanvas = document.getElementById('kpiOpsChart');
+        if(opsCanvas) {
+            if(charts.ops) charts.ops.destroy();
+            charts.ops = new Chart(opsCanvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Copy Drafting (hrs/wk)', 'Revenue per Email ($)', 'Site Engagement (min)'],
+                    datasets: [
+                        { label: 'Current Baseline', data: [25, 0.08, 2.5], backgroundColor: '#d6d3d1', borderRadius: 6 },
+                        { label: 'Improved Target', data: [2.5, 0.10, 3.0], backgroundColor: '#0d9488', borderRadius: 6 }
+                    ]
+                },
+                options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{usePointStyle:true, padding:20}} }, scales:{ y:{ beginAtZero:true } } }
+            });
+        }
+    }
+</script>
+</body>
+</html>
